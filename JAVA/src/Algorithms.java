@@ -106,11 +106,18 @@ public class Algorithms {
 				heapHandler();
 				break;
 			case 8:
-				System.out.println("To be added!");
-				displayArrayMenu();
+				if(userTempArray == null) displayArrayMenu();
+				int[] temp2 = userTempArray;
+				System.out.println("---Original Array---");
+				printArray(temp2);
+ 				quickSort(userTempArray,0,userTempArray.length-1);
+				System.out.println("---Quick Sorted Array---");
+				printArray(userTempArray);
+				userTempArray = temp2;
+				displayMainMenu();
+				displayMainMenu();
 				break;
 			case 9:
-				System.out.println("To be added!");
 				displayArrayMenu();
 				break;
 			case 10:
@@ -680,6 +687,30 @@ public class Algorithms {
 		while (j < right.length) arrIn[k++] = right[j++];
 	}
 	
+	public static void quickSort(int[] arrIn,int start,int end) {
+		if(start < end) {
+			int mid = partition(arrIn,start,end);
+			quickSort(arrIn,start,mid-1);
+			quickSort(arrIn,mid+1,end);
+		}
+	}
+	
+	private static int partition(int[] arrIn,int start,int end) {
+		int x = arrIn[end];
+		int i = (start-1);
+		for(int j=start;j<end;j++) {
+			if(arrIn[j] <= x) {
+				i++;
+				int tmp = arrIn[i];
+				arrIn[i] = arrIn[j];
+				arrIn[j] = tmp;
+			}
+		}
+		int tmp2 = arrIn[i+1];
+		arrIn[i+1] = arrIn[end];
+		arrIn[end] = tmp2;
+		return i+1;
+	}
 	
 	/** Prints the passed array
 	 * 
@@ -692,7 +723,7 @@ public class Algorithms {
 		System.out.println("");
 	}
 	
-	/** Validates if user input and informs the user.
+	/** Validates if user input is number and informs the user.
 	 * 
 	 * @param userInput Any user input from the menu prompts
 	 * @return boolean
