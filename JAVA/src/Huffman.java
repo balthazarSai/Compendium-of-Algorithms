@@ -27,6 +27,10 @@ public class Huffman {
 	    }
 	}
 	
+	/** Receives a string from the user and builds a Huffman tree
+	 * 
+	 * @param input A string to be converted into a Huffman tree
+	 */
 	public void huffman(String input) {
 		for (char character: input.toCharArray()){
             letterNodes.put(character, letterNodes.getOrDefault(character, 0) + 1);  
@@ -50,6 +54,12 @@ public class Huffman {
 	      System.out.println("Huffman Codes : " + huffman); 
 	}
 	
+	/** Encodes the tree to give out the new variable 0,1 codes
+	 * 
+	 * @param root The root Node
+	 * @param str A string object to place the codes in
+	 * @param huffmanCode The hashmap that maps codes to corresponding letters.
+	 */
 	public static void huffmanEncode(Node root, String str, Map<Character, String> huffmanCode)  
     {  
         if (root == null)return;   

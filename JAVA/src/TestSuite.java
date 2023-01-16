@@ -58,6 +58,44 @@ public class TestSuite {
 		assertArrayEquals(expected,que.queue);
 		
 	}
+	
+	@Test
+	public void testHeap() {
+		int[] expected = {100,1,2,50,55,67,10,12,140};
+		Heap hp = new Heap(expected);
+		hp.heapSort(hp);
+		assertEquals(1,hp.heap[0]);
+		assertEquals(2,hp.heap[1]);
+		assertEquals(100,hp.heap[7]);
+		assertEquals(140,hp.heap[8]);
+		
+	}
+	
+	@Test
+	public void testBST() {
+		BinarySearchTree bst = new BinarySearchTree();
+		bst.addNode(100);
+		bst.addNode(1);
+		bst.addNode(25);
+		bst.addNode(5);
+		bst.addNode(115);
+		bst.addNode(12);
+		assertEquals(1,bst.treeMin(bst.root).data);
+		assertEquals(115,bst.treeMax(bst.root).data);
+		assertEquals(12,bst.treeSuccessor(bst.treeSearch(bst.root, 5)).data);
+		bst.treeDelete(bst, bst.treeSearch(bst.root, 25));
+		assertEquals(null,bst.treeSearch(bst.root, 25));
+	}
+	
+	@Test
+	public void testLL() {
+		LinkedList llst = new LinkedList();
+		llst.addNode(5);
+		llst.addNode(15);
+		assertEquals(15,llst.searchNode(15).data);
+		//Work In Progress
+	}
+
 
 	
 }

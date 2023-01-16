@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author BalthazarSai
+ * @date 16 Jan 2023
+ */
 public class LinkedList {
 	Node head, tail = null;
 	
@@ -12,6 +16,10 @@ public class LinkedList {
 		}
 	}
 	
+	/** Adds a Node to the linked list based on user input
+	 * 
+	 * @param value The integer value that the Node will contain
+	 */
 	public void addNode(int value) {
 		
 		Node newNode = new Node(value);
@@ -28,6 +36,11 @@ public class LinkedList {
 		}
 	}
 	
+	/** Removes a Node from the linked list based on user input
+	 *  **BROKEN**
+	 * 
+	 * @param value The integer value of the Node to be removed
+	 */
 	public void removeNode(int value) {
 		Node target = searchNode(value);
 		if(target != null) {
@@ -39,6 +52,11 @@ public class LinkedList {
 		}
 	}
 	
+	/** Searches for a Node based on its contained value
+	 * 
+	 * @param value The integer value of the Node to be found
+	 * @return The Node if its found or Null if its not
+	 */
 	public Node searchNode(int value) {
 		Node index = head;
 		if(head == null) {
@@ -52,6 +70,9 @@ public class LinkedList {
 		}
 	}
 	
+	/** Prints the Linked List
+	 * 
+	 */
 	public void printLinkedList() {
 		Node index = head;
 		if(head == null) {

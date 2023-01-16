@@ -134,7 +134,7 @@ public class Heap {
 	 * @param A The heap for which to perform the extraction
 	 * @return The min element
 	 */
-	public int heapExtractMin(Heap A) {
+	private int heapExtractMin(Heap A) {
 		if(A.heapSize < 1) System.out.println("Heap Underflow");
 		int min = A.heap[0];
 		A.heap[0] = A.heap[A.heapSize];
