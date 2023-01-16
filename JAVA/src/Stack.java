@@ -15,7 +15,7 @@ public class Stack {
 	}
 	
 	public int pop() {
-		if(!checkUndeflow()) {
+		if(!checkUnderflow()) {
 			int tmp = stack[stackPointer];
 			stackPointer--;
 			return tmp;
@@ -36,14 +36,14 @@ public class Stack {
 	
 	public boolean checkOverflow() {
 		if(stackPointer+1 >= stack.length) {
-			System.out.println("Stack Overflow!");
+			System.out.println("Stack Overflow");
 			return true;
 		}else return false;
 	}
 	
-	public boolean checkUndeflow() {
+	public boolean checkUnderflow() {
 		if(stackPointer-1 < -1) {
-			System.out.println("Stack Undeflow!");
+			System.out.println("Stack Underflow");
 			return true;
 		}else return false;
 	}

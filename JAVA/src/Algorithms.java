@@ -267,7 +267,7 @@ public class Algorithms {
 				}
 				break;
 			case 2:
-				if(!userStack.checkUndeflow()) {
+				if(!userStack.checkUnderflow()) {
 					System.out.println("Removed "+userStack.pop());
 				}
 				break;
