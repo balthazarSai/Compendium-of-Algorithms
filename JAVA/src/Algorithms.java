@@ -656,6 +656,12 @@ public class Algorithms {
 		while (j < right.length) arrIn[k++] = right[j++];
 	}
 	
+	/** QuickSort Sorting Algorithm
+	 * 
+	 * @param arrIn The array to be sorted
+	 * @param start The array starting index
+	 * @param end The array ending index
+	 */
 	public static void quickSort(int[] arrIn,int start,int end) {
 		if(start < end) {
 			int mid = partition(arrIn,start,end);
@@ -664,6 +670,13 @@ public class Algorithms {
 		}
 	}
 	
+	/** Partition algorithm used privately from {@link #quickSort(int[], int, int)}
+	 * 
+	 * @param arrIn The array to be partitioned
+	 * @param start The starting index
+	 * @param end The ending index
+	 * @return Returns the midpoint index
+	 */
 	private static int partition(int[] arrIn,int start,int end) {
 		int x = arrIn[end];
 		int i = (start-1);
