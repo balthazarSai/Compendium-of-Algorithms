@@ -42,7 +42,7 @@ public class Stack {
 	}
 	
 	public boolean checkUndeflow() {
-		if(stackPointer-1 < 0) {
+		if(stackPointer-1 < -1) {
 			System.out.println("Stack Undeflow!");
 			return true;
 		}else return false;

@@ -26,20 +26,16 @@ public class Algorithms {
 	
 	static Huffman userHuffman;
 	
-	static StringBuilder sb = new StringBuilder();
+	static StringBuilder sb;
 	
 	static Scanner scan = new Scanner(System.in);
 
 	
 	public static void main(String[] args) {
-		
-
 		System.out.println("---Select an option---");
 		while(appRunning) {
 			displayMainMenu();
 		}
-		
-		
 	}
 	
 	/** Displays the main app menu in terminal
@@ -88,6 +84,7 @@ public class Algorithms {
 			case 5:
 				if(userTempArray == null) displayArrayMenu();
 				insertionSort(userTempArray);
+				displayArrayMenu();
 				break;
 			case 6:
 				if(userTempArray == null) displayArrayMenu();
@@ -98,7 +95,7 @@ public class Algorithms {
 				System.out.println("---Merge Sorted Array---");
 				printArray(userTempArray);
 				userTempArray = temp;
-				displayMainMenu();
+				displayArrayMenu();
 				break;
 			case 7:
 				if(userTempArray == null) displayArrayMenu();
@@ -114,8 +111,7 @@ public class Algorithms {
 				System.out.println("---Quick Sorted Array---");
 				printArray(userTempArray);
 				userTempArray = temp2;
-				displayMainMenu();
-				displayMainMenu();
+				displayArrayMenu();
 				break;
 			case 9:
 				displayArrayMenu();
@@ -127,12 +123,14 @@ public class Algorithms {
 			default:
 				System.out.println("Invalid Input Please choose again!");
 				displayMainMenu();
+				break;
 			}
         }
         catch (NumberFormatException ex){
             System.out.println("Invalid Input, Please Choose again");
-            displayMainMenu();
+            
         }
+		
 	}
 	
 	/** Displays the array menu in terminal
@@ -140,7 +138,6 @@ public class Algorithms {
 	 */
 	private static void displayArrayMenu() {
 		int arrayMenuChoice;
-		
 		
 		System.out.println("-**Array Menu**-");
 		System.out.println("New Array	-> 1");
@@ -163,14 +160,13 @@ public class Algorithms {
 				break;
 			default:
 				System.out.println("You can only choose a number 1-3");
-				displayArrayMenu();
 				break;
 			}
         }
         catch (NumberFormatException ex){
             System.out.println("Invalid Input, Please Choose again");
-            displayArrayMenu();
         }
+		displayArrayMenu();
 		
 	}
 	
@@ -178,7 +174,6 @@ public class Algorithms {
 	 * 
 	 */
 	private static void arrayCreateHandler() {
-		
 		int arrSize = 0;
 		int tmpIn = 0;
 		
@@ -186,32 +181,30 @@ public class Algorithms {
 		String userSizeChoice = scan.nextLine();
 		try{
 			arrSize = Integer.parseInt(userSizeChoice);
+			userTempArray = new int[arrSize];
+			
+			System.out.println("Enter your values");
+			for(int i=0;i<arrSize;i++) {
+				System.out.printf(" [%d]: ",i);
+				String elementTemp = scan.nextLine();
+				try{
+					tmpIn = Integer.parseInt(elementTemp);
+		        }
+		        catch (NumberFormatException ex){
+		            System.out.println("Invalid Input, Please Choose again");
+		            i--;
+		            continue;
+		        }
+				userTempArray[i] = tmpIn;	
+			}
+			System.out.println("Created...");
+			displayArrayMenu();
         }
         catch (NumberFormatException ex){
             System.out.println("Invalid Input, Please Choose again");
             arrayCreateHandler();
         }
-		
-		userTempArray = new int[arrSize];
-		
-		System.out.println("Enter your values");
-		for(int i=0;i<arrSize;i++) {
-			System.out.printf(" [%d]: ",i);
-			String elementTemp = scan.nextLine();
-			try{
-				tmpIn = Integer.parseInt(elementTemp);
-	        }
-	        catch (NumberFormatException ex){
-	            System.out.println("Invalid Input, Please Choose again");
-	            i--;
-	            continue;
-	        }
-			userTempArray[i] = tmpIn;
-			
-		}
-		
-		System.out.println("Created...");
-		displayArrayMenu();
+
 	}
 	
 	/** Displays the user saved array
@@ -220,16 +213,14 @@ public class Algorithms {
 	private static void arrayDisplayHandler() {
 		if(userTempArray == null) {
 			System.out.println("No array defined");
-			displayArrayMenu();
 		}else {
 			System.out.println("--Showing Array--");
 			for(int i=0;i<userTempArray.length;i++) {
 				System.out.print(" ["+i+"]: "+userTempArray[i]);
 			}
 			System.out.println("");
-			displayArrayMenu();
 		}
-
+		displayArrayMenu();
 	}
 	
 	/** Builds a stack object based on user input from the terminal
@@ -241,12 +232,12 @@ public class Algorithms {
 			String userStackSize = scan.nextLine();
 			if(isNumber(userStackSize)) {
 				stackSize = Integer.parseInt(userStackSize);
-			}else {
+				userStack = new Stack(stackSize);
 				stackHandler();
+			}else {
+				displayMainMenu();
 			}
-			
 		} 
-		userStack = new Stack(stackSize);
 	}
 	
 	/** Handles all operations to be performed on the saved stack object through user input from the terminal
@@ -263,37 +254,35 @@ public class Algorithms {
 		String userStackOp = scan.nextLine();
 		if(isNumber(userStackOp)) {
 			stackOp = Integer.parseInt(userStackOp);
-		}else {
-			stackHandler();
-		}
-		switch(stackOp) {
-		case 1:
-			System.out.println("Enter a number: ");
-			int element = 1;
-			String userElement = scan.nextLine();
-			if(isNumber(userElement)) {
-				element = Integer.parseInt(userElement);
-			}else {
-				stackHandler();
+			switch(stackOp) {
+			case 1:
+				if(!userStack.checkOverflow()) {
+					System.out.println("Enter a number: ");
+					int element = 1;
+					String userElement = scan.nextLine();
+					if(isNumber(userElement) ) {
+						element = Integer.parseInt(userElement);
+						userStack.push(element);
+					}		
+				}
+				break;
+			case 2:
+				if(!userStack.checkUndeflow()) {
+					System.out.println("Removed "+userStack.pop());
+				}
+				break;
+			case 3:
+				userStack.printStack();
+				break;
+			case 4:
+				displayMainMenu();
+				break;
+			default:
+				System.out.println("Invalid Input, Please Choose again");
+				break;
 			}
-			userStack.push(element);
-			stackHandler();
-			break;
-		case 2:
-			System.out.println("Removed "+userStack.pop());
-			stackHandler();
-			break;
-		case 3:
-			userStack.printStack();
-			stackHandler();
-			break;
-		case 4:
-			displayMainMenu();
-			break;
-		default:
-			System.out.println("Invalid Input, Please Choose again");
-			stackHandler();
 		}
+		stackHandler();
 	}
 	
 	/** Builds a queue object based on user input from the terminal
@@ -305,11 +294,13 @@ public class Algorithms {
 			String userQueueSize = scan.nextLine();
 			if(isNumber(userQueueSize)) {
 				queueSize = Integer.parseInt(userQueueSize);
+				userQueue = new Queue(queueSize);
+				queueHandler();
 			}else {
-				stackHandler();
+				displayMainMenu();
 			}
 		} 
-		userQueue = new Queue(queueSize);
+		
 		
 	}
 	
@@ -333,29 +324,26 @@ public class Algorithms {
 		switch(queueOp) {
 		case 1:
 			System.out.println("Enter a number: ");
-			int element = 1;
+			int element = 0;
 			String userElement = scan.nextLine();
 			if(isNumber(userElement)) {
 				element = Integer.parseInt(userElement);
 				userQueue.enqueue(element);
 			}
-			queueHandler();
 			break;
 		case 2:
 			System.out.println("Removed "+userQueue.dequeue());
-			queueHandler();
 			break;
 		case 3:
 			userQueue.printQueue();
-			queueHandler();
 			break;
 		case 4:
 			displayMainMenu();
 			break;
 		default:
 			System.out.println("Invalid Input, Please Choose again");
-			queueHandler();
 		}
+		queueHandler();
 	}
 	
 	/** Builds a Linked List object based on user input from the terminal
@@ -380,52 +368,46 @@ public class Algorithms {
 		String userlinkedListOp = scan.nextLine();
 		if(isNumber(userlinkedListOp)) {
 			linkedListOp = Integer.parseInt(userlinkedListOp);
-		}else {
-			queueHandler();
+			switch(linkedListOp) {
+			case 1:
+				System.out.println("Enter a number: ");
+				int element = 1;
+				String userElement = scan.nextLine();
+				if(isNumber(userElement)) {
+					element = Integer.parseInt(userElement);
+					userLinkedList.addNode(element);
+				}
+				break;
+			case 2:
+				System.out.println("Enter a number: ");
+				element = 1;
+				userElement = scan.nextLine();
+				if(isNumber(userElement)) {
+					element = Integer.parseInt(userElement);
+					userLinkedList.removeNode(element);
+				}
+				break;
+			case 3:
+				System.out.println("Enter a number: ");
+				element = 1;
+				userElement = scan.nextLine();
+				if(isNumber(userElement)) {
+					element = Integer.parseInt(userElement);
+					if(userLinkedList.searchNode(element) == null) System.out.println("Output: "+userLinkedList.searchNode(element));
+					else System.out.println("Output: "+userLinkedList.searchNode(element).data);
+				}
+				break;
+			case 4:
+				userLinkedList.printLinkedList();
+				break;
+			case 5:
+				displayMainMenu();
+				break;
+			default:
+				System.out.println("Invalid Input, Please Choose again");
+			}
 		}
-		switch(linkedListOp) {
-		case 1:
-			System.out.println("Enter a number: ");
-			int element = 1;
-			String userElement = scan.nextLine();
-			if(isNumber(userElement)) {
-				element = Integer.parseInt(userElement);
-				userLinkedList.addNode(element);
-			}
-			linkedListHandler();
-			break;
-		case 2:
-			System.out.println("Enter a number: ");
-			element = 1;
-			userElement = scan.nextLine();
-			if(isNumber(userElement)) {
-				element = Integer.parseInt(userElement);
-				userLinkedList.removeNode(element);
-			}
-			linkedListHandler();
-			break;
-		case 3:
-			System.out.println("Enter a number: ");
-			element = 1;
-			userElement = scan.nextLine();
-			if(isNumber(userElement)) {
-				element = Integer.parseInt(userElement);
-				if(userLinkedList.searchNode(element) == null) System.out.println("Output: "+userLinkedList.searchNode(element));
-				else System.out.println("Output: "+userLinkedList.searchNode(element).data);
-			}
-			linkedListHandler();
-			break;
-		case 4:
-			userLinkedList.printLinkedList();
-			linkedListHandler();
-			break;
-		case 5:
-			displayMainMenu();
-			break;
-		default:
-			System.out.println("Invalid Input, Please Choose again");
-			linkedListHandler();
-		}
+		linkedListHandler();
 	}
 	
 	/** Builds a Binary Search Tree object
@@ -453,96 +435,83 @@ public class Algorithms {
 		String userBSTOp = scan.nextLine();
 		if(isNumber(userBSTOp)) {
 			BSTOp = Integer.parseInt(userBSTOp);
-		}else {
-			BSTHandler();
-		}
-		switch(BSTOp) {
-		case 1:
-			System.out.println("Enter the element you want to add: ");
-			int addNode = 0;
-			String useraddNode = scan.nextLine();
-			if(isNumber(useraddNode)) {
-				addNode = Integer.parseInt(useraddNode);
-				userBST.addNode(addNode);
-				BSTHandler();
-			}else {
-				BSTHandler();
-			}
-			break;
-		case 2:
-			if(userBST.root == null) {
-				System.out.println("Tree Empty!");
-				BSTHandler();
-			}else {
-				System.out.println("Which Element do you want to delete?");
-				userBST.traversePreOrder(sb, "", "", userBST.root);
-				System.out.print(sb.toString());
-				int delNode = 0;
-				String userdelNode = scan.nextLine();
-				if(isNumber(userdelNode)) {
-					delNode = Integer.parseInt(userdelNode);
-					if(userBST.treeSearch(userBST.root,delNode) == null) {
-						System.out.println("Element not on the tree!");
-						BSTHandler();
-					}else {
-						userBST.treeDelete(userBST, userBST.treeSearch(userBST.root,delNode));
-						System.out.println("Element Deleted!");
-						BSTHandler();
-					}
-				}else {
-					BSTHandler();
+			switch(BSTOp) {
+			case 1:
+				System.out.println("Enter the element you want to add: ");
+				int addNode = 0;
+				String useraddNode = scan.nextLine();
+				if(isNumber(useraddNode)) {
+					addNode = Integer.parseInt(useraddNode);
+					userBST.addNode(addNode);
 				}
-			}
-			break;
-		case 3:
-			if(userBST.root == null)System.out.println("Tree is Empty!");
-			else System.out.println("Tree min is: "+userBST.treeMin(userBST.root).data);
-			BSTHandler();
-			break;
-		case 4:
-			if(userBST.root == null)System.out.println("Tree is Empty!");
-			else System.out.println("Tree max is: "+userBST.treeMax(userBST.root).data);
-			BSTHandler();
-			break;
-		case 5:
-			if(userBST.root == null) System.out.println("Tree is Empty!");
-			else {
-				System.out.println("For which element do you want to see the successor?");
-				userBST.traversePreOrder(sb, "", "", userBST.root);
-				System.out.print(sb.toString());
-				int successorNode = 0;
-				String userSuccessorNode = scan.nextLine();
-				if(isNumber(userSuccessorNode)) {
-					successorNode = Integer.parseInt(userSuccessorNode);
-					if(userBST.treeSearch(userBST.root,successorNode) == null) System.out.println("Element not on the tree!");
-					else System.out.println("Successor of ["+successorNode+"] is :"+userBST.treeSuccessor(userBST.treeSearch(userBST.root,successorNode)).data);
+				break;
+			case 2:
+				if(userBST.root == null) {
+					System.out.println("Tree Empty!");
+				}else {
+					sb = new StringBuilder();
+					System.out.println("Which Element do you want to delete?");
+					userBST.traversePreOrder(sb, "", "", userBST.root);
+					System.out.print(sb.toString());
+					int delNode = 0;
+					String userdelNode = scan.nextLine();
+					if(isNumber(userdelNode)) {
+						delNode = Integer.parseInt(userdelNode);
+						if(userBST.treeSearch(userBST.root,delNode) == null) {
+							System.out.println("Element not on the tree!");
+						}else {
+							userBST.treeDelete(userBST, userBST.treeSearch(userBST.root,delNode));
+							System.out.println("Element Deleted!");
+						}
 					}
-				BSTHandler();
+				}
+				break;
+			case 3:
+				if(userBST.root == null)System.out.println("Tree is Empty!");
+				else System.out.println("Tree min is: "+userBST.treeMin(userBST.root).data);
+				break;
+			case 4:
+				if(userBST.root == null)System.out.println("Tree is Empty!");
+				else System.out.println("Tree max is: "+userBST.treeMax(userBST.root).data);
+				break;
+			case 5:
+				if(userBST.root == null) System.out.println("Tree is Empty!");
+				else {
+					sb = new StringBuilder();
+					System.out.println("For which element do you want to see the successor?");
+					userBST.traversePreOrder(sb, "", "", userBST.root);
+					System.out.print(sb.toString());
+					int successorNode = 0;
+					String userSuccessorNode = scan.nextLine();
+					if(isNumber(userSuccessorNode)) {
+						successorNode = Integer.parseInt(userSuccessorNode);
+						if(userBST.treeSearch(userBST.root,successorNode) == null) System.out.println("Element not on the tree!");
+						else System.out.println("Successor of ["+successorNode+"] is :"+userBST.treeSuccessor(userBST.treeSearch(userBST.root,successorNode)).data);
+					}
+				}
+				break;
+			case 6:
+				if(userBST.root == null) System.out.println("Tree is Empty!");
+				else userBST.inorderTreeWalk(userBST.root);
+				System.out.println("");
+				break;
+			case 7:
+				if(userBST.root == null) System.out.println("Tree is Empty!");
+				else {
+					sb = new StringBuilder();
+					userBST.traversePreOrder(sb, "", "", userBST.root);
+					System.out.print(sb.toString());
+				}
+				break;
+			case 8:
+				displayMainMenu();
+				break;
+			default:
+				System.out.println("Invalid Input, Please Choose again");
+				break;
 			}
-			BSTHandler();
-			break;
-		case 6:
-			if(userBST.root == null) System.out.println("Tree is Empty!");
-			else userBST.inorderTreeWalk(userBST.root);
-			System.out.println("");
-			BSTHandler();
-			break;
-		case 7:
-			if(userBST.root == null) System.out.println("Tree is Empty!");
-			else {
-				userBST.traversePreOrder(sb, "", "", userBST.root);
-				System.out.print(sb.toString());
-			}
-			BSTHandler();
-			break;
-		case 8:
-			displayMainMenu();
-			break;
-		default:
-			System.out.println("Invalid Input, Please Choose again");
-			BSTHandler();
-			break;
 		}
+		BSTHandler();	
 	}
 	
 	/** Builds a Heap object 

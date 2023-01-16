@@ -34,6 +34,8 @@ public class LinkedList {
 			if(target.prev != null) target.prev.next = target.next;
 			else head.next = target.next;
 			if(target.next == null) target.next.prev = target.prev;
+		}else {
+			System.out.println("Target not Found!");
 		}
 	}
 	
