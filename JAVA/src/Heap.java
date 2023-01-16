@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author balthazarSai
+ * @date 16 Jan 2023
+ */
 public class Heap {
 	
 	int[] heap;
@@ -9,19 +13,39 @@ public class Heap {
 		this.heap = A;
 	}
 	
+	/** Finds the left child of a given element using the Heap properties
+	 * 
+	 * @param index The index of the element for which we want to find the LEFT child
+	 * @return The index of the LEFT child
+	 */
 	public int left(int index) {
 		return index*2+1;
 	}
 	
+	/** Finds the right child of a given element using the Heap properties
+	 * 
+	 * @param index The index of the element for which we want to find the RIGHT child
+	 * @return The index of the RIGHT child
+	 */
 	public int right(int index) {
 		return (index*2)+2;
 	}
 	
+	/** Finds the parent of a given element using the Heap properties.
+	 * 
+	 * @param index The index of the element for which we want to find the PARENT
+	 * @return The index of the PARENT
+	 */
 	public int parent(int index) {
 		return (int) Math.floor((double)(index/2));
 	}
 	
-	public void maxHeapify(Heap A,int index) {
+	/** Converts a Heap into a max Heap called privately from {@link #buildMaxHeap(Heap)}
+	 * 
+	 * @param A The Heap that we want to convert to a max Heap
+	 * @param index The starting index decided by the calling function
+	 */
+	private void maxHeapify(Heap A,int index) {
 		int largest;
 		int l = left(index);
 		int r = right(index);
@@ -36,13 +60,22 @@ public class Heap {
 		}
 	}
 	
-	public void buildMinHeap(Heap A) {
+	/** Builds a MAX Heap from a given Heap
+	 * 
+	 * @param A The Heap to be converted
+	 */
+	public void buildMaxHeap(Heap A) {
 		for(int i = Math.floorDiv(A.heap.length, 2);i>=0;i--){
-			minHeapify(A,i);
+			maxHeapify(A,i);
 		}
 	}
 	
-	public void minHeapify(Heap A,int index) {
+	/** Converts a Heap into a min Heap called privately from {@link #buildMinHeap(Heap)}
+	 * 
+	 * @param A The Heap that we want to convert to a min Heap
+	 * @param index The starting index decided by the calling function
+	 */
+	private void minHeapify(Heap A,int index) {
 		int smallest;
 		int l = left(index);
 		int r = right(index);
@@ -57,12 +90,20 @@ public class Heap {
 		}
 	}
 	
-	public void buildMaxHeap(Heap A) {
+	/** Builds a MIN Heap from a given heap
+	 * 
+	 * @param A The Heap to be converted
+	 */
+	public void buildMinHeap(Heap A) {
 		for(int i = Math.floorDiv(A.heap.length, 2);i>=0;i--){
-			maxHeapify(A,i);
+			minHeapify(A,i);
 		}
 	}
 	
+	/** Sorts the given Heap
+	 * 
+	 * @param A The given Heap
+	 */
 	public void heapSort(Heap A) {
 		buildMaxHeap(A);
 		for(int i = A.heap.length-1;i>=1;i--) {
@@ -74,7 +115,12 @@ public class Heap {
 		}
 	}
 	
-	public int heapExtractMax(Heap A) {
+	/** UNUSED Extracts the MAX element of a MAX Heap
+	 * 
+	 * @param A The heap for which to perform the extraction
+	 * @return The max element
+	 */
+	private int heapExtractMax(Heap A) {
 		if(A.heapSize < 1) System.out.println("Heap Underflow");
 		int max = A.heap[0];
 		A.heap[0] = A.heap[A.heapSize];
@@ -83,6 +129,11 @@ public class Heap {
 		return max;
 	}
 	
+	/** USUSED Extracts the MIN element of a MIN Heap
+	 * 
+	 * @param A The heap for which to perform the extraction
+	 * @return The min element
+	 */
 	public int heapExtractMin(Heap A) {
 		if(A.heapSize < 1) System.out.println("Heap Underflow");
 		int min = A.heap[0];
