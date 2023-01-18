@@ -12,13 +12,25 @@ public class Huffman {
 		Node left,right = null;
 		char character;
 		
-	    public Node(Character character, Integer frequency)  
+		/** The Node subclass constructor
+		 * 
+		 * @param character
+		 * @param frequency
+		 */
+	    private Node(Character character, Integer frequency)  
 	    {  
 	        this.character = character;  
 	        this.frequency = frequency;  
 	    }
 		
-		public Node(Character character, Integer frequency, Node left, Node right)  
+	    /** The Node subclass constructor
+	     * 
+	     * @param character Character to be held by the Node
+	     * @param frequency Frequency to be heal by the Node
+	     * @param left The left child of the Node
+	     * @param right The right child of the Node
+	     */
+		private Node(Character character, Integer frequency, Node left, Node right)  
 	    {  
 	        this.character = character;  
 	        this.frequency = frequency;  

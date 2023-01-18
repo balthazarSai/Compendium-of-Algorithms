@@ -8,6 +8,10 @@ public class Heap {
 	int[] heap;
 	int heapSize = 0;
 	
+	/** The heap class constructor
+	 * 
+	 * @param A An integer array to be passed on as a heap
+	 */
 	public Heap(int[] A){
 		this.heapSize = A.length;
 		this.heap = A;

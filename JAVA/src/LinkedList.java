@@ -11,7 +11,11 @@ public class LinkedList {
 		Node next;
 		Node prev;
 		
-		public Node(int value) {
+		/** The Node subclass constructor
+		 * 
+		 * @param value The integer value to be held by the created node
+		 */
+		private Node(int value) {
 			data = value;
 		}
 	}

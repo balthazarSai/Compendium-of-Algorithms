@@ -7,13 +7,18 @@
 public class BinarySearchTree {
 	Node root = null;
 
+
 	static class Node{
 		int data;
 		Node parent;
 		Node left;
 		Node right;
 		
-		public Node(int value) {
+		/** The Node subclass constructor
+		 * 
+		 * @param value The integer value to be held by the created node
+		 */
+		private Node(int value) {
 			data = value;
 		}
 	}
